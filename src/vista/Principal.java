@@ -36,23 +36,23 @@ public class Principal {
         System.out.println("-----------------------------------------------------------------------------------------");
         System.out.println("Prueba de lectura de operaciones:\n" + //
                         "");
-        System.out.println(operacion.read(1));
-        System.out.println(operacion.read(2));
-        System.out.println(operacion.read(3));
-        System.out.println(operacion.read(4));
+        System.out.println(operacion.read(estacion1.getId()));
+        System.out.println(operacion.read(estacion2.getId()));
+        System.out.println(operacion.read(estacion3.getId()));
+        
         System.out.println("-----------------------------------------------------------------------------------------");
        
         System.out.println("Prueba de actualización de operaciones:\n" + //
                         "");
         EstacionCargaLenta estacionActualizada = new EstacionCargaLenta(34, "Ciudad A", punto1, false, "Provincia A", "SDSD", 10, 2);
-        System.out.println(operacion.update(estacionActualizada.getId(), estacionActualizada));
+        System.out.println(operacion.update(estacion1.getId(), estacionActualizada));
         System.out.println(operacion.read(estacionActualizada.getId()));
         System.out.println("-----------------------------------------------------------------------------------------");
         
         System.out.println("Prueba de eliminación de operaciones:\n" + //
                         "");
-        System.out.println(operacion.delete(estacion1.getId()));
-        System.out.println(operacion.read(estacion1.getId()));
+        System.out.println(operacion.delete(estacionActualizada.getId()));
+        System.out.println(operacion.read(estacionActualizada.getId()));
         System.out.println("-----------------------------------------------------------------------------------------");
     
         System.out.println("Prueba de lectura de todas las estaciones: \n" + //
