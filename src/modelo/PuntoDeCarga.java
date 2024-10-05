@@ -1,105 +1,71 @@
 package modelo;
-import java.util.Arrays;
+
+import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 
-public class PuntoDeCarga {
+public class PuntoDeCarga implements Serializable {
+    private boolean operativo;
+    private int cargasRealizadas;
+    private String estadoActual;
+    private List<String> historialFallos;
 
-    private int id;
-
-    /**
-     * 
-     */
-    private String nombre;
-
-
-
-    private String direccion;
-
-    /**
-     * 
-     */
-    private String tiposDeConector;
-
-    /**
-     * 
-     */
-    private boolean estado;
-
-    /**
-     * 
-     */
-    private String[ ] historialDeCarga;
-
-    public PuntoDeCarga(int id, String nombre, String direccion, String tiposDeConector, boolean estado, String[] historialDeCarga) {
-        this.id = id;
-        this.nombre = nombre;
-        this.direccion = direccion;
-        this.tiposDeConector = tiposDeConector;
-        this.estado = estado;
-        this.historialDeCarga = historialDeCarga;
+    public PuntoDeCarga() {
+        this.operativo = true;
+        this.cargasRealizadas = 0;
+        this.estadoActual = "Disponible";
+        this.historialFallos = new ArrayList<>();
     }
 
-    public int getId() {
-        return id;
+    public boolean isOperativo() {
+        return operativo;
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public String getEstadoActual() {
+        return estadoActual;
     }
 
-    public String getNombre() {
-        return nombre;
+    public int getCargasRealizadas() {
+        return cargasRealizadas;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public String realizarCarga() {
+        if (!operativo) {
+            return "Error: Punto de carga no operativo";
+        }
+        cargasRealizadas++;
+        return "Carga realizada exitosamente. Total de cargas: " + cargasRealizadas;
     }
 
-    public String getDireccion() {
-        return direccion;
+    public String reportarFallo(String descripcion) {
+        operativo = false;
+        estadoActual = "Fuera de servicio";
+        historialFallos.add("Fallo reportado: " + descripcion + " - Fecha: " +
+                LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
+        return "Fallo reportado y registrado";
     }
 
-    public void setDireccion(String direccion) {
-        this.direccion = direccion;
+    public List<String> getHistorialFallos() {
+        return new ArrayList<>(historialFallos);
     }
 
-    public String getTiposDeConector() {
-        return tiposDeConector;
+    public void setOperativo(boolean operativo) {
+        this.operativo = operativo;
     }
 
-    public void setTiposDeConector(String tiposDeConector) {
-        this.tiposDeConector = tiposDeConector;
+    public void setCargasRealizadas(int cargasRealizadas) {
+        this.cargasRealizadas = cargasRealizadas;
     }
 
-    public boolean isEstado() {
-        return estado;
+    public void setEstadoActual(String estadoActual) {
+        this.estadoActual = estadoActual;
     }
 
-    public void setEstado(boolean estado) {
-        this.estado = estado;
+    public void setHistorialFallos(List<String> historialFallos) {
+        this.historialFallos = historialFallos;
     }
-
-    public String[] getHistorialDeCarga() {
-        return historialDeCarga;
-    }
-
-    public void setHistorialDeCarga(String[] historialDeCarga) {
-        this.historialDeCarga = historialDeCarga;
-    }
-
-    @Override
-    public String toString() {
-        return "PuntoDeCarga{" +
-                "id=" + id +
-                ", nombre='" + nombre + '\'' +
-                ", direccion='" + direccion + '\'' +
-                ", tiposDeConector='" + tiposDeConector + '\'' +
-                ", estado=" + estado +
-
-                ", historialDeCarga=" + Arrays.toString(historialDeCarga) +
-                '}';
-    }
-
 
 
 
@@ -117,11 +83,8 @@ public class PuntoDeCarga {
         return kWhNecesarios / velocidadDeCarga;
     }
 
-    public void agregarCargaAlHistorial(String nuevaCarga) {
-        String[] nuevoHistorial = Arrays.copyOf(historialDeCarga, historialDeCarga.length + 1);
-        nuevoHistorial[nuevoHistorial.length - 1] = nuevaCarga;
-        historialDeCarga = nuevoHistorial;
-    }
+
+
 
 
 }

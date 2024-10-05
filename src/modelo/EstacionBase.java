@@ -1,43 +1,66 @@
 package modelo;
+
+import java.io.Serializable;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
-// Clase base EstacionBase (Superclase de la jerarquía)
-// Herencia: EstacionBase es la clase padre que será heredada por otras clases
-public abstract class EstacionBase {
 
-    private int id;
+public abstract class EstacionBase implements Serializable {
 
-    private String ubicacion;
-    private PuntoDeCarga puntoDeCarga;
+    protected int id;
+    protected String ubicacion;
+    protected PuntoDeCarga puntoDeCarga;
+    protected boolean estado;
+    protected String provincia;
+    protected String codigoDeEstacion;
+    protected Mantenimiento mantenimiento;
 
-    private boolean estado;
-
-    private String provincia;
-
-    private Mantenimiento mantenimiento;
-
-    private final String codigoDeEstacion;
-
-
-    public EstacionBase(int id, String ubicacion, PuntoDeCarga puntoDeCarga, boolean estado, String provincia, String codigoDeEstacion) {
+    public EstacionBase(int id, String ubicacion, PuntoDeCarga puntoDeCarga,
+                        boolean estado, String provincia, String codigoDeEstacion) {
         this.id = id;
         this.ubicacion = ubicacion;
-        //Composicion fuerte
         this.puntoDeCarga = puntoDeCarga;
         this.estado = estado;
         this.provincia = provincia;
-
         this.codigoDeEstacion = codigoDeEstacion;
+    }
+
+    // Métodos abstractos que las subclases deben implementar
+    public abstract String getTipoEstacion();
+
+    public abstract int getVelocidadCarga();
+
+    public abstract int getCapacidad();
+
+
+    public int getId() {
+        return id;
     }
 
     public String getCodigoDeEstacion() {
         return codigoDeEstacion;
     }
 
-    public int getId() {
-        return id;
+    public boolean isEstado() {
+        return estado;
     }
+
+    public void setEstado(boolean estado) {
+        this.estado = estado;
+    }
+
+    public PuntoDeCarga getPuntoDeCarga() {
+        return puntoDeCarga;
+    }
+
+    public String obtenerEstado() {
+        return String.format("ID: %d, Código: %s, Ubicación: %s, Provincia: %s, " +
+                        "Estado: %s, Tipo: %s, Velocidad: %d kW, Capacidad: %d kW",
+                id, codigoDeEstacion, ubicacion, provincia,
+                (estado ? "Disponible" : "No disponible"),
+                getTipoEstacion(), getVelocidadCarga(), getCapacidad());
+    }
+
 
     public void setId(int id) {
         this.id = id;
@@ -51,21 +74,11 @@ public abstract class EstacionBase {
         this.ubicacion = ubicacion;
     }
 
-    public PuntoDeCarga getPuntoDeCarga() {
-        return puntoDeCarga;
-    }
 
     public void setPuntoDeCarga(PuntoDeCarga puntoDeCarga) {
         this.puntoDeCarga = puntoDeCarga;
     }
 
-    public boolean isEstado() {
-        return estado;
-    }
-
-    public void setEstado(boolean estado) {
-        this.estado = estado;
-    }
 
     public String getProvincia() {
         return provincia;
@@ -108,15 +121,11 @@ public abstract class EstacionBase {
     public abstract void realizarMantenimiento();
 
 
-
-
-
     protected String ahora() {
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
         LocalDateTime now = LocalDateTime.now();
         return dtf.format(now);
     }
-
 
 
     public boolean estaOperativa() {
@@ -125,7 +134,7 @@ public abstract class EstacionBase {
 
 
     public int calcularTiempoCarga(int capacidad) {
-    return 4;
+        return 4;
     }
 
 }

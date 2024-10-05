@@ -21,6 +21,13 @@ public class EstacionCargaSuperRapida extends EstacionCargaRapida {
     public String toString() {
         return "EstacionCargaSuperRapida{" +
                 "superVelocidad=" + superVelocidad +
+                ", id=" + id +
+                ", ubicacion='" + ubicacion + '\'' +
+                ", puntoDeCarga=" + puntoDeCarga +
+                ", estado=" + estado +
+                ", provincia='" + provincia + '\'' +
+                ", codigoDeEstacion='" + codigoDeEstacion + '\'' +
+                ", mantenimiento=" + mantenimiento +
                 '}';
     }
 

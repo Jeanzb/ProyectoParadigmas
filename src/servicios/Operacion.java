@@ -4,17 +4,22 @@ import modelo.EstacionBase;
 
 public interface Operacion {
 
-    public String create(EstacionBase estacion);
+    String create(EstacionBase estacion);
 
 
-    public EstacionBase read(int id);
+    EstacionBase read(int id);
 
 
-    public String update(int id, EstacionBase nuevaEstacion);
+    String update(int id, EstacionBase nuevaEstacion);
 
 
-    public EstacionBase delete(int id);
+    EstacionBase delete(int id);
 
-    public EstacionBase[] readAll();
- 
+    EstacionBase[] readAll();
+
+    EstacionBase[] deserializar(String path, String name);
+
+    String serializar(EstacionBase[] estaciones, String path, String name);
+
+
 }

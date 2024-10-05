@@ -1,69 +1,69 @@
 package modelo;
 
-import java.time.LocalDate;
+import java.util.*;
+
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.time.temporal.ChronoUnit;
+
 
 public class Mantenimiento {
+    private LocalDateTime ultimoMantenimiento;
+    private List<String> historialMantenimiento;
+    private boolean enMantenimiento;
 
-    private int id;
-    private String descripcion;
-    private String fecha;
-
-    public Mantenimiento(int id, String descripcion, String fecha) {
-        this.id = id;
-        this.descripcion = descripcion;
-        this.fecha = fecha;
+    public Mantenimiento() {
+        this.historialMantenimiento = new ArrayList<>();
+        this.enMantenimiento = false;
     }
 
-    public int getId() {
-        return id;
+    public void iniciarMantenimiento() {
+        this.enMantenimiento = true;
+        this.ultimoMantenimiento = LocalDateTime.now();
+        this.historialMantenimiento.add("Mantenimiento iniciado: " +
+                ultimoMantenimiento.format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void finalizarMantenimiento() {
+        this.enMantenimiento = false;
+        this.historialMantenimiento.add("Mantenimiento finalizado: " +
+                LocalDateTime.now().format(DateTimeFormatter.ISO_LOCAL_DATE_TIME));
     }
 
-    public String getDescripcion() {
-        return descripcion;
+    public boolean isEnMantenimiento() {
+        return enMantenimiento;
     }
 
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
+    public LocalDateTime getUltimoMantenimiento() {
+        return ultimoMantenimiento;
     }
 
-    public String getFecha() {
-        return fecha;
+    public List<String> getHistorialMantenimiento() {
+        return new ArrayList<>(historialMantenimiento);
     }
 
-    public void setFecha(String fecha) {
-        this.fecha = fecha;
+    public void setUltimoMantenimiento(LocalDateTime ultimoMantenimiento) {
+        this.ultimoMantenimiento = ultimoMantenimiento;
+    }
+
+    public void setHistorialMantenimiento(List<String> historialMantenimiento) {
+        this.historialMantenimiento = historialMantenimiento;
+    }
+
+    public void setEnMantenimiento(boolean enMantenimiento) {
+        this.enMantenimiento = enMantenimiento;
     }
 
     @Override
     public String toString() {
         return "Mantenimiento{" +
-                "id=" + id +
-                ", descripcion='" + descripcion + '\'' +
-                ", fecha='" + fecha + '\'' +
+                "ultimoMantenimiento=" + ultimoMantenimiento +
+                ", historialMantenimiento=" + historialMantenimiento +
+                ", enMantenimiento=" + enMantenimiento +
                 '}';
     }
 
-
-    public boolean validarEstado(PuntoDeCarga puntoDeCarga) {
-        if (puntoDeCarga == null) {
-            return false;
-        }
-        return puntoDeCarga.isEstado(); // Asumiendo que 'estado' true significa operativo o en mantenimiento
-    }
-
-    //Metodo que no se puede sobrescribir
-    final public String calcularProximoMantenimiento(String fecha) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-        LocalDate fechaAdq = LocalDate.parse(fecha, formatter);
-        LocalDate proximoMantenimiento = fechaAdq.plus(6, ChronoUnit.MONTHS);
-        return proximoMantenimiento.format(formatter);
-    }
-
-
 }
+
+
+
+
