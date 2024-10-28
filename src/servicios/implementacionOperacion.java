@@ -11,15 +11,25 @@ import java.util.List;
 import java.time.format.DateTimeFormatter;
 import java.util.Objects;
 
+/**
+ * Clase que implementa las operaciones CRUD y otras funcionalidades para la gestión de estaciones de carga.
+ */
 public class ImplementacionOperacion implements Operacion {
     private EstacionBase[] estaciones;
     private static final int CAPACIDAD_INICIAL = 2;
 
-
+    /**
+     * Establece el arreglo de estaciones.
+     *
+     * @param estaciones El arreglo de estaciones a establecer.
+     */
     public void setEstaciones(EstacionBase[] estaciones) {
         this.estaciones = estaciones;
     }
 
+    /**
+     * Constructor que inicializa el arreglo de estaciones con una capacidad inicial.
+     */
     public ImplementacionOperacion() {
         estaciones = new EstacionBase[CAPACIDAD_INICIAL];
     }
@@ -34,13 +44,11 @@ public class ImplementacionOperacion implements Operacion {
     @Override
     public String create(EstacionBase nuevaEstacion) {
         try {
-            
             for (EstacionBase estacion : estaciones) {
                 if (estacion != null && estacion.getId() == nuevaEstacion.getId()) {
                     return "Error: Ya existe una estación con el mismo ID.";
                 }
             }
-
 
             for (int i = 0; i < estaciones.length; i++) {
                 if (estaciones[i] == null) {
@@ -97,6 +105,14 @@ public class ImplementacionOperacion implements Operacion {
                      .toArray(EstacionBase[]::new);
     }
 
+    /**
+     * Serializa un arreglo de estaciones de carga y lo guarda en un archivo.
+     *
+     * @param estaciones El arreglo de estaciones de carga a serializar.
+     * @param path La ruta del archivo.
+     * @param name El nombre del archivo.
+     * @return Un mensaje indicando el resultado de la operación.
+     */
     public String serializar(EstacionBase[] estaciones, String path, String name) {
         try {
             FileOutputStream fos = new FileOutputStream(path + name);
@@ -109,6 +125,14 @@ public class ImplementacionOperacion implements Operacion {
             return "Error file " + ioe.getMessage();
         }
     }
+
+    /**
+     * Deserializa un archivo para obtener un arreglo de estaciones de carga.
+     *
+     * @param path La ruta del archivo.
+     * @param name El nombre del archivo.
+     * @return Un arreglo de estaciones de carga deserializadas.
+     */
     public EstacionBase[] deserializar(String path, String name) {
         EstacionBase[] a = null;
         try {
@@ -125,6 +149,12 @@ public class ImplementacionOperacion implements Operacion {
         return a;
     }
 
+    /**
+     * Realiza una carga en una estación de carga específica.
+     *
+     * @param id El ID de la estación de carga.
+     * @return Un mensaje indicando el resultado de la operación.
+     */
     public String realizarCarga(int id) {
         EstacionBase estacion = read(id);
         if (estacion == null) {
@@ -147,6 +177,12 @@ public class ImplementacionOperacion implements Operacion {
                 resultadoCarga);
     }
 
+    /**
+     * Reporta un fallo en una estación de carga específica.
+     *
+     * @param id El ID de la estación de carga.
+     * @return Un mensaje indicando el resultado de la operación.
+     */
     public String reportarFallo(int id) {
         EstacionBase estacion = read(id);
         if (estacion == null) {
@@ -164,6 +200,12 @@ public class ImplementacionOperacion implements Operacion {
         return resultado;
     }
 
+    /**
+     * Verifica el estado de una estación de carga específica.
+     *
+     * @param id El ID de la estación de carga.
+     * @return Un mensaje indicando el estado de la estación de carga.
+     */
     public String verificarEstado(int id) {
         EstacionBase estacion = read(id);
         if (estacion == null) {
@@ -184,6 +226,12 @@ public class ImplementacionOperacion implements Operacion {
                 punto.getCargasRealizadas());
     }
 
+    /**
+     * Realiza o finaliza el mantenimiento de una estación de carga específica.
+     *
+     * @param id El ID de la estación de carga.
+     * @return Un mensaje indicando el resultado de la operación.
+     */
     public String realizarMantenimiento(int id) {
         EstacionBase estacion = read(id);
         if (estacion == null) {
@@ -208,6 +256,12 @@ public class ImplementacionOperacion implements Operacion {
         }
     }
 
+    /**
+     * Obtiene el historial de mantenimiento de una estación de carga específica.
+     *
+     * @param id El ID de la estación de carga.
+     * @return Un mensaje con el historial de mantenimiento de la estación de carga.
+     */
     public String obtenerHistorialMantenimiento(int id) {
         EstacionBase estacion = read(id);
         if (estacion == null) {
@@ -236,6 +290,4 @@ public class ImplementacionOperacion implements Operacion {
 
         return sb.toString();
     }
-
-    
 }

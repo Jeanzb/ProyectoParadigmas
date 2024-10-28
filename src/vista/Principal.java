@@ -3,6 +3,32 @@ import java.util.*;
 import modelo.*;
 import servicios.*;
 
+/**
+ * La clase Principal es la clase principal del sistema de gestión de estaciones de carga.
+ * Proporciona una interfaz de usuario basada en consola para realizar diversas operaciones
+ * relacionadas con las estaciones de carga, como crear, ver, actualizar, eliminar, serializar
+ * y deserializar estaciones.
+ * 
+ * <p>Esta clase utiliza la clase ImplementacionOperacion para realizar las operaciones
+ * CRUD (Crear, Leer, Actualizar, Eliminar) en las estaciones de carga.</p>
+ * 
+ * <p>El menú principal ofrece las siguientes opciones:</p>
+ * <ul>
+ *   <li>1. Crear estación</li>
+ *   <li>2. Ver todas las estaciones</li>
+ *   <li>3. Ver estación específica</li>
+ *   <li>4. Actualizar estación</li>
+ *   <li>5. Eliminar estación</li>
+ *   <li>6. Guardar datos en archivo</li>
+ *   <li>7. Cargar datos desde archivo</li>
+ *   <li>8. Salir</li>
+ * </ul>
+ * 
+ * <p>La clase maneja las entradas del usuario y las excepciones que puedan ocurrir durante
+ * la ejecución de las operaciones.</p>
+ * 
+ * @see ImplementacionOperacion
+ */
 public class Principal {
 
     private static final ImplementacionOperacion operacion = new ImplementacionOperacion();
@@ -73,6 +99,12 @@ public class Principal {
     private static void crearEstacion() {
         try {
             int id = leerEnteroValido("ID de la estación: ");
+
+            if (operacion.read(id) != null) {
+                System.out.println("Error: Ya existe una estación con el mismo ID.");
+                return;
+            }
+            
             String ubicacion = leerEntrada("Ubicación: ");
             String provincia = leerEntrada("Provincia: ");
             String codigo = leerEntrada("Código de estación: ");
