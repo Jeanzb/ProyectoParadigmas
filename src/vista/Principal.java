@@ -1,4 +1,5 @@
 package vista;
+
 import java.util.*;
 import modelo.*;
 import servicios.*;
@@ -34,12 +35,16 @@ public class Principal {
     private static final ImplementacionOperacion operacion = new ImplementacionOperacion();
     private static final Scanner scanner = new Scanner(System.in);
 
-    public static void main(String[ ] args) {
+    /**
+     * Método principal que inicia la aplicación.
+     *
+     * @param args Argumentos de la línea de comandos.
+     */
+    public static void main(String[] args) {
 
         String path = "";
         String file = "TextNoBinary.txt";
         ImplementacionOperacion op = new ImplementacionOperacion();
-
 
         boolean salir = false;
         while (!salir) {
@@ -67,7 +72,9 @@ public class Principal {
         System.out.println("Gracias por usar el sistema de gestión de estaciones de carga.");
     }
 
-
+    /**
+     * Muestra el menú principal de opciones.
+     */
     private static void mostrarMenu() {
         System.out.println("\n=== Sistema de Gestión de Estaciones de Carga ===");
         System.out.println("1. Crear estación");
@@ -81,11 +88,23 @@ public class Principal {
         System.out.println("=============================================");
     }
 
+    /**
+     * Lee una entrada del usuario.
+     *
+     * @param mensaje Mensaje a mostrar al usuario.
+     * @return La entrada del usuario como una cadena.
+     */
     private static String leerEntrada(String mensaje) {
         System.out.print(mensaje);
         return scanner.nextLine().trim();
     }
 
+    /**
+     * Lee una entrada del usuario y la convierte a un entero válido.
+     *
+     * @param mensaje Mensaje a mostrar al usuario.
+     * @return La entrada del usuario como un entero.
+     */
     private static int leerEnteroValido(String mensaje) {
         while (true) {
             try {
@@ -96,6 +115,9 @@ public class Principal {
         }
     }
 
+    /**
+     * Crea una nueva estación de carga.
+     */
     private static void crearEstacion() {
         try {
             int id = leerEnteroValido("ID de la estación: ");
@@ -104,7 +126,7 @@ public class Principal {
                 System.out.println("Error: Ya existe una estación con el mismo ID.");
                 return;
             }
-            
+
             String ubicacion = leerEntrada("Ubicación: ");
             String provincia = leerEntrada("Provincia: ");
             String codigo = leerEntrada("Código de estación: ");
@@ -138,6 +160,9 @@ public class Principal {
         }
     }
 
+    /**
+     * Muestra todas las estaciones de carga.
+     */
     private static void verTodasEstaciones() {
         try {
             List<EstacionBase> estaciones = List.of(operacion.readAll());
@@ -156,6 +181,9 @@ public class Principal {
         }
     }
 
+    /**
+     * Muestra los detalles de una estación específica.
+     */
     private static void verEstacionEspecifica() {
         try {
             int id = leerEnteroValido("ID de la estación: ");
@@ -172,6 +200,9 @@ public class Principal {
         }
     }
 
+    /**
+     * Actualiza una estación de carga existente.
+     */
     private static void actualizarEstacion() {
         try {
             int id = leerEnteroValido("ID de la estación a actualizar: ");
@@ -207,6 +238,9 @@ public class Principal {
         }
     }
 
+    /**
+     * Elimina una estación de carga existente.
+     */
     private static void eliminarEstacion() {
         try {
             int id = leerEnteroValido("ID de la estación a eliminar: ");
@@ -222,34 +256,33 @@ public class Principal {
         }
     }
 
-//    private static void realizarMantenimiento() {
-//        try {
-//            int id = leerEnteroValido("ID de la estación para mantenimiento: ");
-//            System.out.println(operacion.realizarMantenimiento(id));
-//        } catch (Exception e) {
-//            System.out.println("Error al realizar el mantenimiento: " + e.getMessage());
-//        }
-//    }
+    // Métodos comentados para futuras funcionalidades
+    // private static void realizarMantenimiento() {
+    //     try {
+    //         int id = leerEnteroValido("ID de la estación para mantenimiento: ");
+    //         System.out.println(operacion.realizarMantenimiento(id));
+    //     } catch (Exception e) {
+    //         System.out.println("Error al realizar el mantenimiento: " + e.getMessage());
+    //     }
+    // }
 
-//    private static void realizarCarga() {
-//        try {
-//            int id = leerEnteroValido("ID de la estación para realizar carga: ");
-//            System.out.println(operacion.realizarCarga(id));
-//        } catch (Exception e) {
-//            System.out.println("Error al realizar la carga: " + e.getMessage());
-//        }
-//    }
+    // private static void realizarCarga() {
+    //     try {
+    //         int id = leerEnteroValido("ID de la estación para realizar carga: ");
+    //         System.out.println(operacion.realizarCarga(id));
+    //     } catch (Exception e) {
+    //         System.out.println("Error al realizar la carga: " + e.getMessage());
+    //     }
+    // }
 
-//    private static void reportarFallo() {
-//        try {
-//            int id = leerEnteroValido("ID de la estación para reportar fallo: ");
-//            String descripcion = leerEntrada("Descripción del fallo: ");
-//            System.out.println(operacion.reportarFallo(id));
-//            System.out.println("Descripción registrada: " + descripcion);
-//        } catch (Exception e) {
-//            System.out.println("Error al reportar el fallo: " + e.getMessage());
-//        }
-//    }
-
-
+    // private static void reportarFallo() {
+    //     try {
+    //         int id = leerEnteroValido("ID de la estación para reportar fallo: ");
+    //         String descripcion = leerEntrada("Descripción del fallo: ");
+    //         System.out.println(operacion.reportarFallo(id));
+    //         System.out.println("Descripción registrada: " + descripcion);
+    //     } catch (Exception e) {
+    //         System.out.println("Error al reportar el fallo: " + e.getMessage());
+    //     }
+    // }
 }
